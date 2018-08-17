@@ -178,7 +178,7 @@ do ##class(DSW.Report.Task).Run(url, reportname)
 
 Всё, после всех этих манипуляций у нас получился автогенерируемый отчёт, состоящий из виджетов DeepSeeWeb, который в заданное время рассылается по почте в виде PDF.
 
-Пример готового отчёта можно посмотреть [здесь](https://bit.ly/2MhMLfh).
-Файл конфигурации этого отчёта посмотреть [здесь](https://github.com/intersystems-community/dc-analytics/blob/master/src/reports/week/config.js).
-А [здесь](https://community.intersystems.com/post/analysing-developer-community-activity-using-intersystems-analytics-technology-deepsee) можно подписаться на еженедельную доставку отчетов.
-[Ссылка](https://github.com/intersystems-community/dsw-reports) на репозиторий.
+Пример готового отчёта можно посмотреть [здесь](https://bit.ly/2MhMLfh).   
+Файл конфигурации этого отчёта посмотреть [здесь](https://github.com/intersystems-community/dc-analytics/blob/master/src/reports/week/config.js).   
+А [здесь](https://community.intersystems.com/post/analysing-developer-community-activity-using-intersystems-analytics-technology-deepsee) можно подписаться на еженедельную доставку отчетов.   
+[Ссылка](https://github.com/intersystems-community/dsw-reports) на репозиторий.   
