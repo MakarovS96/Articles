@@ -129,7 +129,7 @@ function getConfiguration(params){
 
 ### Чем заполнять блок?
 Основные поля для заполнения в блоке - это **url** для настроек виджета и **mdx** для настроек вычисляемых значений.   
-- **MDX** можно составить и вручную, но рекомендуется делать это при помощи визуального коструктора [Analyzer](https://docs.intersystems.com/latest/csp/docbook/DocBook.UI.Page.cls?KEY=D2ANLY_ch_intro), встроенного в DeepSee.
+- **MDX** можно составить и вручную, но рекомендуется делать это при помощи визуального коструктора [Analyzer](https://docs.intersystems.com/latest/csp/docbook/DocBook.UI.Page.cls?KEY=D2ANLY_ch_intro), встроенного в InterSystems IRIS BI/DeepSee.
 ![Analyzer](https://raw.githubusercontent.com/MakarovS96/images/master/Analyzer.png)
 - **URL** можно получить при помощи DeepSeeWeb. Виджеты встроенные в отчёт это элементы *iframe*, источниками которых являются виджеты DeepSeeWeb. Для того, чтобы получить ссылку на источник надо выбрать пункт *"Share"* в контекстном меню виджета.
 ![Share](https://raw.githubusercontent.com/MakarovS96/images/master/Share.png)
@@ -139,7 +139,7 @@ function getConfiguration(params){
 
 ## Рассылка по E-mail
 
-Допустим отчёт уже готов и размещён в папке отчетов в DeepSeeWeb. Т.е. интерактивный HTML отчет теперь доступен по ссылке. Что нужно сделать чтобы, конвертировать его в PDF и разослать по почте? Это автоматически сделают [pthantomjs](http://phantomjs.org/) и встроенный SMTP клиент. Как установить и настроить phantomjs можно посмотреть здесь ([windows](https://youtu.be/L8Lw53MjDdY), [ubuntu](https://www.vultr.com/docs/how-to-install-phantomjs-on-ubuntu-16-04)). Но для этого надо настроить SMTP клиент и создать задание в [Менеджере задач](https://docs.intersystems.com/latest/csp/docbook/DocBook.UI.Page.cls?KEY=GSA_manage_taskmgr). 
+Допустим отчёт уже готов и размещён в папке отчетов в DeepSeeWeb. Т.е. интерактивный HTML отчет теперь доступен по ссылке. Что нужно сделать чтобы, конвертировать его в PDF и разослать по почте? Это автоматически сделают [pthantomjs](http://phantomjs.org/) и встроенный SMTP-клиент. Как установить и настроить phantomjs можно посмотреть здесь ([windows](https://youtu.be/L8Lw53MjDdY), [ubuntu](https://www.vultr.com/docs/how-to-install-phantomjs-on-ubuntu-16-04)). Но для этого надо настроить SMTP-клиент и создать задание в [Менеджере задач](https://docs.intersystems.com/latest/csp/docbook/DocBook.UI.Page.cls?KEY=GSA_manage_taskmgr). 
 
 ### Настройка SMTP
 Все настройки производятся в терминале.
@@ -149,7 +149,7 @@ function getConfiguration(params){
 do ##class(DSW.Report.EmailSender).setConfig(server, port, username, 
                                                  password, sender, SSLConfig)
 ```
-- **server** - адрес SMTP сервера.  
+- **server** - адрес SMTP-сервера.  
 - **port** - порт для исходящих собщений.  
 - **username** и **password** - аутентификационные данные.  
 - **sender** - E-mail адрес рассылки.  
