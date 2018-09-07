@@ -4,7 +4,7 @@
 <cut />
 
 ## Что такое DSW Reports?
-[DSW Reports](https://github.com/intersystems-community/dsw-reports) - это расширение DSW, написанное на AngularJS, которое реализует оновной функционал для автоматической генерации отчётов. DSW Reports использующет [DeepSeeWeb](https://github.com/intersystems-ru/DeepSeeWeb) для отрисовки виджетов и [MDX2JSON](https://github.com/intersystems-ru/Cache-MDX2JSON) для обработки MDX запросов.
+[DSW Reports](https://github.com/intersystems-community/dsw-reports) - это расширение DSW, написанное на AngularJS, которое реализует основной функционал для автоматической генерации отчётов. DSW Reports использует [DeepSeeWeb](https://github.com/intersystems-ru/DeepSeeWeb) для отрисовки виджетов и [MDX2JSON](https://github.com/intersystems-ru/Cache-MDX2JSON) для обработки MDX запросов.
 
 ### Возможности:
 - Отрисовка выбранных виджетов с установленными фильтрами.
@@ -20,14 +20,14 @@
 - **index.html** - каркас и главная страница отчёта, обычно не изменяется.
 - **config.js** - конфигурация  отчёта, меняется для разных отчётов, отвечает за наполнение отчёта.
 
-В файле конфигурации очёта должна обязательно содержаться функция **getConfiguration**.
+В файле конфигурации отчёта должна обязательно содержаться функция **getConfiguration**.
 ```javascript
 // Общие настройки отчёта
 function getConfiguration(params){...}
 ```
 Функция **getConfiguration** принимает обьект *params*, который содержит в себе параметры из строки URL и дополнительный параметр "***server***", являющийся адресом сервера. Параметр "***server***" имеет вид: `protocol://host:port`.
 
-Благодаря обьекту *params* можно передавать в отчёт любые данные через URL строку. Например, если требуется изменять фильтры виджетов по желанию, тогда передаём с URL параметр "***filter***" и он будет доступен через обьект *params*.
+Благодаря объекту *params* можно передавать в отчёт любые данные через URL строку. Например, если требуется изменять фильтры виджетов по желанию, тогда передаём с URL параметр "***filter***" и он будет доступен через объект *params*.
 ```javascript
 //<protocol://host:port>/dsw/reports/report_dir/index.html?filter=NOW
 function getConfiguration(params){
@@ -35,13 +35,13 @@ function getConfiguration(params){
 }
 ```
 
-Функция **getConfiguration** возвращает обьект, содержащий 3 свойства:
+Функция **getConfiguration** возвращает объект, содержащий 3 свойства:
 
 - *REPORT_NAME* - название отчёта
 - *BLOCKS* - массив блоков отчёта
 - *NAMESPACE* - область с данными для отчёта
 
-Рассмотрим подробнее массив блоков *BLOCKS*. Блок - обьект с настройками виджета, настройками вычисляемых полей и т.д.
+Рассмотрим подробнее массив блоков *BLOCKS*. Блок - объект с настройками виджета, настройками вычисляемых полей и т.д.
 
 ### Вид блока:
 ```javascript
@@ -129,21 +129,21 @@ function getConfiguration(params){
 
 ### Чем заполнять блок?
 Основные поля для заполнения в блоке - это **url** для настроек виджета и **mdx** для настроек вычисляемых значений.   
-- **MDX** можно составить и вручную, но рекомендуется делать это при помощи визуального коструктора [Analyzer](https://docs.intersystems.com/latest/csp/docbook/DocBook.UI.Page.cls?KEY=D2ANLY_ch_intro), встроенного в InterSystems IRIS BI/DeepSee.
+- **MDX** можно составить и вручную, но рекомендуется делать это при помощи визуального конструктора [Analyzer](https://docs.intersystems.com/latest/csp/docbook/DocBook.UI.Page.cls?KEY=D2ANLY_ch_intro), встроенного в InterSystems IRIS BI/DeepSee.
 ![Analyzer](https://raw.githubusercontent.com/MakarovS96/images/master/Analyzer.png)
-- **URL** можно получить при помощи DeepSeeWeb. Виджеты встроенные в отчёт это элементы *iframe*, источниками которых являются виджеты DeepSeeWeb. Для того, чтобы получить ссылку на источник надо выбрать пункт *"Share"* в контекстном меню виджета.
+- **URL** можно получить при помощи DeepSeeWeb. Виджеты встроенные в отчёт это элементы *iframe*, источниками которых являются виджеты DeepSeeWeb. Чтобы получить ссылку на источник, выберите пункт *"Share"* в контекстном меню виджета.
 ![Share](https://raw.githubusercontent.com/MakarovS96/images/master/Share.png)
 
 ### Кастомизация внешнего вида отчёта. 
-Вместе с библиотеками отчёта поставляется файл **style.css** позволяющий редактировать внешний вид отчёта. В нем содержится стандарный набор классаов управляющий всеми элементами отчёта. Также можно добавлять свои классы стилей и использовать их в файле **index.html**.
+Вместе с библиотеками отчёта поставляется файл **style.css** позволяющий редактировать внешний вид отчёта. В нем содержится стандартный набор классов, управляющий всеми элементами отчёта. Также можно добавлять свои классы стилей и использовать их в файле **index.html**.
 
 ## Рассылка по E-mail
 
-Допустим отчёт уже готов и размещён в папке отчетов в DeepSeeWeb. Т.е. интерактивный HTML отчет теперь доступен по ссылке. Что нужно сделать чтобы, конвертировать его в PDF и разослать по почте? Это автоматически сделают [pthantomjs](http://phantomjs.org/) и встроенный SMTP-клиент. Как установить и настроить phantomjs можно посмотреть здесь ([windows](https://youtu.be/L8Lw53MjDdY), [ubuntu](https://www.vultr.com/docs/how-to-install-phantomjs-on-ubuntu-16-04)). Но для этого надо настроить SMTP-клиент и создать задание в [Менеджере задач](https://docs.intersystems.com/latest/csp/docbook/DocBook.UI.Page.cls?KEY=GSA_manage_taskmgr). 
+Допустим отчёт уже готов и размещён в папке отчетов в DeepSeeWeb. Т.е. интерактивный HTML отчет теперь доступен по ссылке. Что нужно сделать чтобы, конвертировать его в PDF и разослать по почте? Это автоматически сделают [pthantomjs](http://phantomjs.org/) и встроенный SMTP-клиент. Как установить и настроить phantomjs можно посмотреть здесь ([windows](https://youtu.be/L8Lw53MjDdY), [ubuntu](https://www.vultr.com/docs/how-to-install-phantomjs-on-ubuntu-16-04)). Для этого нужно настроить SMTP-клиент и создать задание в [Менеджере задач](https://docs.intersystems.com/latest/csp/docbook/DocBook.UI.Page.cls?KEY=GSA_manage_taskmgr). 
 
 ### Настройка SMTP
 Все настройки производятся в терминале.
-1. Сначала надо настроить почту для рассылки
+1. Сначала нужно настроить почту для рассылки
 ```
 // Функция для настройки SMTP
 do ##class(DSW.Report.EmailSender).setConfig(server, port, username, 
@@ -175,7 +175,7 @@ do ##class(DSW.Report.Task).Run(url, reportname)
 ![Task1](https://raw.githubusercontent.com/MakarovS96/images/master/Task1.png)
 2. На второй странице настраивается время и переодичность запуска задачи.
 ![Task2](https://raw.githubusercontent.com/MakarovS96/images/master/Task2.png)
-3. Последним шагом надо нажать *"Завершить"*.
+3. Последний шаг -  нажимаем *"Завершить"*.
 
 Всё, после всех этих манипуляций у нас получился автогенерируемый отчёт, состоящий из виджетов DeepSeeWeb, который в заданное время рассылается по почте в виде PDF.
 
