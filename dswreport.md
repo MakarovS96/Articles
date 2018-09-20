@@ -1,18 +1,18 @@
 # DSW Reports — генератор отчетов DeepSeeWeb
 
-[InterSystems IRIS Data Platform](https://www.intersystems.com/resources/detail/intersystems-iris-data-platform/) включают в себя технологию [InterSystems IRIS Business Intelligence](https://www.intersystems.com/products/intersystems-iris/analytics/) (также известную как DeepSee в InterSystems HealthShare/Ensemble/Caché) для разработки аналитических  приложений. InterSystems IRIS BI и DeepSee предоставляют REST API [MDX2JSON](https://github.com/intersystems-ru/Cache-MDX2JSON), позволяющий использовать альтернативные средства визуализации аналитических дашбордов. В проектах на технологиях InterSystems часто используется проект [DeepSeeWeb](https://github.com/intersystems-ru/DeepSeeWeb) (AngularJS-приложение для визуализации аналитических дашбордов InterSystems IRIS BI). Для тех, кто хочет познакомится с описанными выше технологиями рекомендуем статью [«Визуализация данных Московской Биржи с помощью InterSystems DeepSee»](https://habr.com/company/intersystems/blog/335586/) и [«Визуализация на карте распределения голосов по Москве на выборах президента 2018»](https://habr.com/company/intersystems/blog/351992/). При создании аналитических приложений разработчики периодически сталкиваются с необходимостью формирования и рассылки PDF-отчётов, состоящих из произвольных виджетов, расположенных в отдельных дашбордах.  Для решения данной задачи можно использовать проект [DSW Reports](https://github.com/intersystems-community/dsw-reports), который расширяет возможности  DeepSeeWeb. В этой статье будет описано как пользоваться DSW Reports для генерации PDF-отчетов и рассылки их по электронной почте.
+[InterSystems IRIS Data Platform](https://www.intersystems.com/resources/detail/intersystems-iris-data-platform/) включает в себя технологию [InterSystems IRIS Business Intelligence](https://www.intersystems.com/products/intersystems-iris/analytics/) (также известную как DeepSee в InterSystems HealthShare/Ensemble/Caché) для разработки аналитических  приложений. InterSystems IRIS BI и DeepSee предоставляют REST API [MDX2JSON](https://github.com/intersystems-ru/Cache-MDX2JSON), позволяющий использовать альтернативные средства визуализации аналитических дашбордов. В проектах на технологиях InterSystems часто используется [DeepSeeWeb](https://github.com/intersystems-ru/DeepSeeWeb) (AngularJS-приложение для визуализации аналитических дашбордов InterSystems IRIS BI). Для тех, кто хочет познакомится с описанными выше технологиями рекомендуем статью [один](https://habr.com/company/intersystems/blog/335586/) и [два](https://habr.com/company/intersystems/blog/351992/). При создании аналитических приложений разработчики периодически сталкиваются с необходимостью формирования и рассылки PDF-отчётов, состоящих из произвольных виджетов, расположенных в отдельных дашбордах.  Для решения данной задачи можно использовать проект [DSW Reports](https://github.com/intersystems-community/dsw-reports), который расширяет возможности  DeepSeeWeb. В этой статье будет описано как пользоваться DSW Reports для генерации PDF-отчетов и рассылки их по электронной почте.
 <cut />
 
 ## Что такое DSW Reports?
-[DSW Reports](https://github.com/intersystems-community/dsw-reports) - это расширение DSW, написанное на AngularJS, которое реализует основной функционал для автоматической генерации отчётов. DSW Reports использует [DeepSeeWeb](https://github.com/intersystems-ru/DeepSeeWeb) для отрисовки виджетов и [MDX2JSON](https://github.com/intersystems-ru/Cache-MDX2JSON) для обработки MDX запросов.
+[DSW Reports](https://github.com/intersystems-community/dsw-reports) - это расширение DSW, написанное на AngularJS, которое реализует основной функционал для автоматической генерации отчётов. DSW Reports использует [DeepSeeWeb](https://github.com/intersystems-ru/DeepSeeWeb) для отрисовки виджетов и [MDX2JSON](https://github.com/intersystems-ru/Cache-MDX2JSON) для обработки MDX-запросов.
 
 ### Возможности:
 - Отрисовка выбранных виджетов с установленными фильтрами.
-- Вывод результатов вычисления произвольных MDX запросов.
-- Автоматическая печатать PDF отчётов и рассылка их по почте
-- Кастомизация внешнего вида отчёта при помощи CSS стилей
+- Вывод результатов вычисления произвольных MDX-запросов.
+- Автоматическая печатать PDF-отчётов и рассылка их по почте
+- Кастомизация внешнего вида отчёта при помощи CSS-стилей
 
-![HTML report](https://raw.githubusercontent.com/MakarovS96/images/master/Report.png)
+![HTML-report](https://raw.githubusercontent.com/MakarovS96/images/master/Report.png)
 
 ## Создание отчёта
 Для формирования отчёта в DSW Reports достаточно создать как минимум 2 файла: 
@@ -27,7 +27,7 @@ function getConfiguration(params){...}
 ```
 Функция **getConfiguration** принимает обьект *params*, который содержит в себе параметры из строки URL и дополнительный параметр "***server***", являющийся адресом сервера. Параметр "***server***" имеет вид: `protocol://host:port`.
 
-Благодаря объекту *params* можно передавать в отчёт любые данные через URL строку. Например, если требуется изменять фильтры виджетов по желанию, тогда передаём с URL параметр "***filter***" и он будет доступен через объект *params*.
+Благодаря объекту *params* можно передавать в отчёт любые данные через URL-строку. Например, если требуется изменять фильтры виджетов по желанию, тогда передаём с URL-параметр "***filter***" и он будет доступен через объект *params*.
 ```javascript
 //<protocol://host:port>/dsw/reports/report_dir/index.html?filter=NOW
 function getConfiguration(params){
@@ -54,7 +54,7 @@ function getConfiguration(params){
         "width": Number         //Ширина iframe
     },
     "totals":[{                 //Настройки значений вычисляемых с помощью MDX
-        "mdx": String           //MDX запрос
+        "mdx": String           //MDX-запрос
         "strings": [{           //Строки значений из запроса
             "title": String,    //Заголовок строки. Может использовать HTML.
             "value": String,    //Значение строки по умолчанию
@@ -62,7 +62,7 @@ function getConfiguration(params){
                                 //Может использоваться для знаков %, $ и т.д. 
                                 //% преобразует значение в процентное (x * 100).
                                 //Может использовать HTML.
-            "row": Number       //Номер строки MDX запроса, 
+            "row": Number       //Номер строки MDX-запроса, 
                                 //из которой берётся значение. 
                                 //По умолчанию 0.
         },{...}]
@@ -131,7 +131,7 @@ function getConfiguration(params){
 Основные поля для заполнения в блоке - это **url** для настроек виджета и **mdx** для настроек вычисляемых значений.   
 - **MDX** можно составить и вручную, но рекомендуется делать это при помощи визуального конструктора [Analyzer](https://docs.intersystems.com/latest/csp/docbook/DocBook.UI.Page.cls?KEY=D2ANLY_ch_intro), встроенного в InterSystems IRIS BI/DeepSee.
 ![Analyzer](https://raw.githubusercontent.com/MakarovS96/images/master/Analyzer.png)
-- **URL** можно получить при помощи DeepSeeWeb. Виджеты встроенные в отчёт это элементы *iframe*, источниками которых являются виджеты DeepSeeWeb. Чтобы получить ссылку на источник, выберите пункт *"Share"* в контекстном меню виджета.
+- **URL** можно получить при помощи DeepSeeWeb. Виджеты встроенные в отчёт - это элементы *iframe*, источниками которых являются виджеты DeepSeeWeb. Чтобы получить ссылку на источник, выберите пункт *"Share"* в контекстном меню виджета.
 ![Share](https://raw.githubusercontent.com/MakarovS96/images/master/Share.png)
 
 ### Кастомизация внешнего вида отчёта 
@@ -139,7 +139,7 @@ function getConfiguration(params){
 
 ## Рассылка по E-mail
 
-Допустим отчёт уже готов и размещён в папке отчетов в DeepSeeWeb. Т.е. интерактивный HTML отчет теперь доступен по ссылке. Что нужно сделать, чтобы конвертировать его в PDF и разослать по почте? Это автоматически сделают [pthantomjs](http://phantomjs.org/) и встроенный SMTP-клиент. Как установить и настроить phantomjs можно посмотреть здесь ([windows](https://youtu.be/L8Lw53MjDdY), [ubuntu](https://www.vultr.com/docs/how-to-install-phantomjs-on-ubuntu-16-04)). Далее нужно настроить SMTP-клиент и создать задание в [Менеджере задач](https://docs.intersystems.com/latest/csp/docbook/DocBook.UI.Page.cls?KEY=GSA_manage_taskmgr). 
+Допустим отчёт уже готов и размещён в папке отчетов в DeepSeeWeb. Т.е. интерактивный HTML-отчет теперь доступен по ссылке. Что нужно сделать, чтобы конвертировать его в PDF и разослать по почте? Это автоматически сделают [pthantomjs](http://phantomjs.org/) и встроенный SMTP-клиент. Как установить и настроить phantomjs можно посмотреть здесь ([windows](https://youtu.be/L8Lw53MjDdY), [ubuntu](https://www.vultr.com/docs/how-to-install-phantomjs-on-ubuntu-16-04)). Далее нужно настроить SMTP-клиент и создать задание в [Менеджере задач](https://docs.intersystems.com/latest/csp/docbook/DocBook.UI.Page.cls?KEY=GSA_manage_taskmgr). 
 
 ### Настройка SMTP
 Все настройки производятся в терминале.
@@ -153,7 +153,7 @@ do ##class(DSW.Report.EmailSender).setConfig(server, port, username,
 - **port** - порт для исходящих собщений.  
 - **username** и **password** - аутентификационные данные.  
 - **sender** - E-mail адрес рассылки.  
-- **SSLConfig** - *Опционально*. Имя [SSL конфигурации](https://docs.intersystems.com/latest/csp/docbook/DocBook.UI.Page.cls?KEY=GCAS_ssltls).   
+- **SSLConfig** - *Опционально*. Имя [SSL-конфигурации](https://docs.intersystems.com/latest/csp/docbook/DocBook.UI.Page.cls?KEY=GCAS_ssltls).   
 2. Затем следует настроить список пользователей для рассылки
 ```
 // Функция для добавления пользователя
